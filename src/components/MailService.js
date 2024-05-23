@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Box, Typography, Grid } from '@mui/material';
+import { Container, Typography, Grid } from '@mui/material';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import MailForm from '../utils/MailForm';
@@ -9,26 +9,34 @@ const OptionBox = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px solid rgba(255, 255, 255, 0.7);
+  border: 2px solid ${({ theme }) => theme.borderColor};
   border-radius: 16px;
   padding: 20px;
   margin: 20px;
   cursor: pointer;
-  background: rgba(0, 0, 0, 0.4);
+  background: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.textColor};
   &:hover {
-    background: rgba(0, 0, 0, 0.6);
+    background: ${({ theme }) => theme.hoverBackground};
     transform: scale(1.05);
   }
 `;
+
+const theme = {
+  borderColor: 'rgba(255, 255, 255, 0.7)', // Panelin ana renklerine göre ayarlayın
+  background: 'rgba(0, 0, 0, 0.4)',        // Panelin ana renklerine göre ayarlayın
+  hoverBackground: 'rgba(0, 0, 0, 0.6)',   // Panelin ana renklerine göre ayarlayın
+  textColor: '#FFFFFF',                    // Panelin ana renklerine göre ayarlayın
+};
 
 const MailService = () => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    { label: 'Mail to Employees', image: 'employee_image_url', endpoint: '/send-company-mail' },
-    { label: 'Mail to Testers', image: 'tester_image_url', endpoint: '/send-test-team-mail' },
-    { label: 'Mail to Players', image: 'player_image_url', endpoint: '/send-players-mail' },
-    { label: 'Mail to Subscribers', image: 'subscriber_image_url', endpoint: '/send-subscribed-mail' }
+    { label: 'Mail to Employees', endpoint: '/send-company-mail' },
+    { label: 'Mail to Testers', endpoint: '/send-test-team-mail' },
+    { label: 'Mail to Players', endpoint: '/send-players-mail' },
+    { label: 'Mail to Subscribers', endpoint: '/send-subscribed-mail' }
   ];
 
   if (selectedOption) {
@@ -37,17 +45,17 @@ const MailService = () => {
 
   return (
     <Container>
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h5" component="h1" gutterBottom>
         Mail Service
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={0}>
         {options.map((option) => (
           <Grid item xs={12} sm={6} md={3} key={option.label}>
             <OptionBox
               onClick={() => setSelectedOption(option)}
               whileHover={{ scale: 1.05 }}
+              theme={theme}
             >
-              <img src={option.image} alt={option.label} style={{ width: '100px', height: '100px', marginBottom: '10px' }} />
               <Typography variant="h6" component="h2">
                 {option.label}
               </Typography>

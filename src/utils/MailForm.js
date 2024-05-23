@@ -9,8 +9,8 @@ const StyledButton = styled(Button)`
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 200px; /* Buton genişliği sabit */
-  height: 50px; /* Buton yüksekliği sabit */
+  width: 150px; /* Daha küçük buton genişliği */
+  height: 40px; /* Daha küçük buton yüksekliği */
   overflow: hidden; /* Taşan içerikleri gizlemek için */
 `;
 
@@ -23,15 +23,46 @@ const IconWrapper = styled.div`
   height: 100%;
 `;
 
-const FormWrapper = styled.div`
+const FormWrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  background: rgba(255, 255, 255, 0.1); /* Hafif şeffaf bir arka plan */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+  position: relative; /* Butonların konumlandırılması için gerekli */
+  width: 100%;
+  max-width: 600px; /* Maksimum genişlik ayarı */
 `;
 
 const StyledTextField = styled(TextField)`
   margin: 10px 0;
+  background-color: rgba(255, 255, 255, 0.8); /* Giriş kutularının arka plan rengi */
+  border-radius: 4px; /* Giriş kutularının köşe yuvarlatma */
+`;
+
+const FileUploadButton = styled(StyledButton)`
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  background-color: #03a9f4;
+  color: white;
+  &:hover {
+    background-color: #0288d1;
+  }
+`;
+
+const SendButton = styled(StyledButton)`
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background-color: #4caf50;
+  color: white;
+  &:hover {
+    background-color: #388e3c;
+  }
 `;
 
 const MailForm = ({ option, goBack }) => {
@@ -119,7 +150,11 @@ const MailForm = ({ option, goBack }) => {
         {option.label}
       </Typography>
       {error && <Typography color="error">{error}</Typography>}
-      <FormWrapper>
+      <FormWrapper
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <StyledTextField
           label="Sender Name"
           variant="outlined"
@@ -151,47 +186,35 @@ const MailForm = ({ option, goBack }) => {
           label="Send as HTML"
         />
         {option.endpoint !== '/send-subscribed-mail' && (
-          <StyledButton
+          <FileUploadButton
             variant="contained"
             component="label"
           >
-            Upload Recipient List (txt)
+            Upload List
             <input
               type="file"
               hidden
               onChange={handleFileChange}
             />
-          </StyledButton>
+          </FileUploadButton>
         )}
-        <StyledButton
+        <SendButton
           variant="contained"
-          color="primary"
           onClick={handleSendEmail}
           disabled={isSending || showSuccess}
         >
           <IconWrapper>
             <AnimatePresence>
               {isSending && (
-                <>
-                  <motion.div
-                    initial={{ x: -50 }}
-                    animate={{ x: 0 }}
-                    exit={{ x: 50 }}
-                    transition={{ duration: 1 }}
-                    style={{ position: 'absolute' }}
-                  >
-                    📧
-                  </motion.div>
-                  <motion.div
-                    initial={{ x: 50 }}
-                    animate={{ x: 0 }}
-                    exit={{ x: 100 }}
-                    transition={{ duration: 1 }}
-                    style={{ position: 'absolute' }}
-                  >
-                    🚚
-                  </motion.div>
-                </>
+                <motion.div
+                  initial={{ x: 100 }}
+                  animate={{ x: -100 }}
+                  exit={{ x: 0 }}
+                  transition={{ duration: 4 }}
+                  style={{ position: 'absolute' }}
+                >
+                  🚚
+                </motion.div>
               )}
               {showSuccess && (
                 <motion.div
@@ -207,10 +230,10 @@ const MailForm = ({ option, goBack }) => {
           </IconWrapper>
           {!isSending && !showSuccess && (
             <>
-              🚚 <span style={{ marginLeft: '8px' }}>Send Email</span>
+              <span style={{ marginRight: '8px' }}>Send Email </span> 🚚
             </>
           )}
-        </StyledButton>
+        </SendButton>
       </FormWrapper>
     </Container>
   );
