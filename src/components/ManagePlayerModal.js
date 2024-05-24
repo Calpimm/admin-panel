@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 
 function ManagePlayerModal({ isOpen, onRequestClose, player, deletePlayer }) {

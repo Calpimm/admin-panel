@@ -23,7 +23,7 @@ body {
   --sidebar-bg-color: #343a40;
   --sidebar-text-color: #fff;
   --btn-bg-color: #007bff;
-  --btn-hover-bg-color: #0056b3;
+  --btn-hover-bg-color: #ff0000;
   --table-bg-color: #fff;
   --table-border-color: #dee2e6;
   --input-bg-color: #fff;
@@ -38,7 +38,7 @@ body {
   --sidebar-bg-color: #242424;
   --sidebar-text-color: #bdbdbd;
   --btn-bg-color: #424242;
-  --btn-hover-bg-color: #616161;
+  --btn-hover-bg-color: #ff0000;
   --table-bg-color: #1f1f1f;
   --table-border-color: #424242;
   --input-bg-color: #2e2e2e;

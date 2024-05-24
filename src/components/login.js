@@ -99,7 +99,8 @@ const Login = () => {
         sessionStorage.setItem('adminToken', data.token);
         setTimeout(() => {
           navigate('/admin-panel');
-        }, 3000); // 3 saniye sonra admin panele yönlendirme
+          window.location.reload();  // Sayfa yenileme işlemi
+        }, 3000); // 3 saniye sonra admin panele yönlendirme ve sayfa yenileme
       } else {
         setError(data.message);
         setLoading(false);

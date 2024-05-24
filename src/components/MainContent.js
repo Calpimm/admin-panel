@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Container, TextField, Table, TableHead, TableRow, TableCell, TableBody, Button } from '@mui/material';
 import styled from 'styled-components';
 import MailService from './MailService';
+import ApiKeySection from './ApiKeySection'; // Yeni bileşeni import edin
 
 const StyledButton = styled(Button)`
   position: relative;
@@ -198,42 +199,7 @@ const MainContent = ({ section, getApiKey, apiKey }) => {
         </>
       )}
       {section === 'apikey' && (
-        <Container style={{ marginTop: '80px' }}>
-          <Button onClick={getApiKey} variant="contained" color="primary">
-            Get API Key
-          </Button>
-          {apiKey && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mt-4"
-            >
-              <p>Your API Key: {apiKey}</p>
-              <h3 className="text-lg font-bold mt-4">Accessible Endpoints:</h3>
-              <ul className="list-disc list-inside">
-                <li className="mt-2">
-                  <strong>/players</strong>: Retrieve a list of players.
-                </li>
-                <li className="mt-2">
-                  <strong>/players/:id</strong>: Retrieve, update, or delete a specific player.
-                </li>
-                <li className="mt-2">
-                  <strong>/admins</strong>: Retrieve a list of admins.
-                </li>
-                <li className="mt-2">
-                  <strong>/vps</strong>: Retrieve information about VPS servers.
-                </li>
-                <li className="mt-2">
-                  <strong>/website</strong>: Retrieve information about the website.
-                </li>
-                <li className="mt-2">
-                  <strong>/mailservice</strong>: Retrieve information about the mail service.
-                </li>
-              </ul>
-            </motion.div>
-          )}
-        </Container>
+        <ApiKeySection getApiKey={getApiKey} apiKey={apiKey} /> // Yeni bileşeni burada kullanın
       )}
       {section === 'mailservice' && <MailService />}
     </Container>
