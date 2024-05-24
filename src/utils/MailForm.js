@@ -1,27 +1,7 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Box, Typography, FormControlLabel, Checkbox } from '@mui/material';
+import { Container, TextField, Button, Typography, FormControlLabel, Checkbox } from '@mui/material';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const StyledButton = styled(Button)`
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 150px; /* Daha küçük buton genişliği */
-  height: 40px; /* Daha küçük buton yüksekliği */
-  overflow: hidden; /* Taşan içerikleri gizlemek için */
-`;
-
-const IconWrapper = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
 
 const FormWrapper = styled(motion.div)`
   display: flex;
@@ -43,10 +23,11 @@ const StyledTextField = styled(TextField)`
   border-radius: 4px; /* Giriş kutularının köşe yuvarlatma */
 `;
 
-const FileUploadButton = styled(StyledButton)`
+const FileUploadButton = styled(Button)`
   position: absolute;
   left: 20px;
   bottom: 20px;
+  width: 150px;
   background-color: #03a9f4;
   color: white;
   &:hover {
@@ -54,15 +35,25 @@ const FileUploadButton = styled(StyledButton)`
   }
 `;
 
-const SendButton = styled(StyledButton)`
+const SendButton = styled(Button)`
   position: absolute;
   right: 20px;
   bottom: 20px;
+  width: 150px;
   background-color: #4caf50;
   color: white;
   &:hover {
     background-color: #388e3c;
   }
+`;
+
+const IconWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
 const MailForm = ({ option, goBack }) => {
@@ -81,8 +72,6 @@ const MailForm = ({ option, goBack }) => {
 
   const handleSendEmail = async () => {
     setIsSending(true);
-    const token = sessionStorage.getItem("adminToken");
-    const endpoint = option.endpoint;
 
     const payload = {
       senderName,
