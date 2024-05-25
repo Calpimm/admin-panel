@@ -3,6 +3,7 @@ import { AppBar, Toolbar, IconButton, Typography, Button, useTheme } from '@mui/
 import MenuIcon from '@mui/icons-material/Menu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 const StyledAppBar = styled(AppBar)`
@@ -27,8 +28,11 @@ function Navbar({ onLogout, toggleSidebar, toggleTheme, theme, isSidebarOpen }) 
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" style={{ flexGrow: 1, color: currentTheme.palette.text.primary }}>
-          Admin Panel
+          {sessionStorage.getItem('role') === 'admin' ? 'Admin Panel' : 'Moderator Panel'}
         </Typography>
+        <Button component={Link} to="/docs" color="inherit" style={{ color: currentTheme.palette.text.primary }}>
+          API Docs
+        </Button>
         <IconButton
           color="inherit"
           onClick={toggleTheme}

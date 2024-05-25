@@ -100,17 +100,19 @@ const Login = () => {
 
       if (response.ok) {
         sessionStorage.setItem('adminToken', data.token);
-        setTimeout(() => {
-          navigate('/admin-panel');
-          window.location.reload();  // Sayfa yenileme işlemi
-        }, 3000); // 3 saniye sonra admin panele yönlendirme ve sayfa yenileme
+        sessionStorage.setItem('role', data.role); // Add user role to session storage
+        if (data.role === 'admin') {
+          navigate('/');
+        } else {
+          navigate('/moderator');
+        }
+        window.location.reload();
       } else {
-        
-        toast.error(`Login failed: ${data.message}`);
+        setError(data.message);
         setLoading(false);
       }
     } catch (error) {
-      toast.error('An error occurred. Please try again.');
+      setError('An error occurred. Please try again.');
       setLoading(false);
     }
   };

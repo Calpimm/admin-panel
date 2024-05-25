@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Typography, Grid } from '@mui/material';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import MailForm from '../utils/MailForm';
+import { toast } from 'react-toastify';
 
 const OptionBox = styled(motion.div)`
   display: flex;
@@ -31,6 +32,12 @@ const theme = {
 
 const MailService = () => {
   const [selectedOption, setSelectedOption] = useState(null);
+  const [role, setRole] = useState('');
+
+  useEffect(() => {
+    const userRole = sessionStorage.getItem('role');
+    setRole(userRole);
+  }, []);
 
   const options = [
     { label: 'Mail to Employees', endpoint: '/send-company-mail' },
@@ -38,6 +45,14 @@ const MailService = () => {
     { label: 'Mail to Players', endpoint: '/send-players-mail' },
     { label: 'Mail to Subscribers', endpoint: '/send-subscribed-mail' }
   ];
+
+  const handleOptionClick = (option) => {
+    if (role !== 'admin') {
+      toast.error('Unauthorized action');
+      return;
+    }
+    setSelectedOption(option);
+  };
 
   if (selectedOption) {
     return <MailForm option={selectedOption} goBack={() => setSelectedOption(null)} />;
@@ -52,7 +67,7 @@ const MailService = () => {
         {options.map((option) => (
           <Grid item xs={12} sm={6} md={3} key={option.label}>
             <OptionBox
-              onClick={() => setSelectedOption(option)}
+              onClick={() => handleOptionClick(option)}
               whileHover={{ scale: 1.05 }}
               theme={theme}
             >

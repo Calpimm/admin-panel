@@ -95,6 +95,13 @@ const MailForm = ({ option, goBack }) => {
 
   const sendEmail = async (payload) => {
     const token = sessionStorage.getItem("adminToken");
+    const role = sessionStorage.getItem("role");
+
+    if (role !== 'admin') {
+      toast.error('Unauthorized action');
+      setIsSending(false);
+      return;
+    }
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}${option.endpoint}`, {
@@ -114,7 +121,7 @@ const MailForm = ({ option, goBack }) => {
           setIsSending(false);
           setTimeout(() => setShowSuccess(false), 2000);
         }, 2000);
-        toast.success('Mail succesfully send')
+        toast.success('Mail successfully sent');
         setSenderName('');
         setSubject('');
         setMailContent('');

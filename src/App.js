@@ -5,10 +5,22 @@ import Login from './components/login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Toastify CSS dosyasını import edin
 import './index.css'; // Import the CSS file
+import Docs from './components/Docs/Docs';
+import ModeratorPanel from './components/ModeratorPanel';
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children, role }) => {
   const isAuthenticated = !!sessionStorage.getItem('adminToken');
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  const userRole = sessionStorage.getItem('role');
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  if (role && userRole !== role) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
 };
 
 function App() {
@@ -20,8 +32,24 @@ function App() {
           <Route
             path="/*"
             element={
-              <PrivateRoute>
+              <PrivateRoute role="admin">
                 <AdminPanel />
+              </PrivateRoute>
+            }
+          />
+          <Route 
+            path="/docs"
+            element={
+              <PrivateRoute>
+                <Docs />
+              </PrivateRoute>
+            }
+          />
+          <Route 
+            path="/moderator"
+            element={
+              <PrivateRoute role="moderator">
+                <ModeratorPanel />
               </PrivateRoute>
             }
           />

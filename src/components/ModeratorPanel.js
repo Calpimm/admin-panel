@@ -7,9 +7,9 @@ import { isAuthenticated } from '../utils/Auth';
 import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 
-function AdminPanel() {
+function ModeratorPanel() {
   const [selectedSection, setSelectedSection] = useState('players');
-  const [apiKey, setApiKey] = useState('');
+  const [moderatorApiKey, setModeratorApiKey] = useState('');
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [theme, setTheme] = useState('light');
@@ -41,7 +41,7 @@ function AdminPanel() {
   });
 
   useEffect(() => {
-    if (!isAuthenticated() || sessionStorage.getItem('role') !== 'admin') {
+    if (!isAuthenticated() || sessionStorage.getItem('role') !== 'moderator') {
       navigate('/login');
     }
   }, [navigate]);
@@ -56,7 +56,7 @@ function AdminPanel() {
     navigate('/login');
   };
 
-  const getApiKey = async () => {
+  const getModeratorApiKey = async () => {
     const token = sessionStorage.getItem("adminToken");
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admin/get-api-key`, {
@@ -68,7 +68,7 @@ function AdminPanel() {
       });
       const data = await response.json();
       if (response.ok) {
-        setApiKey(data.apiKey);
+        setModeratorApiKey(data.moderatorApiKey);
       } else {
         alert(data.message);
       }
@@ -92,7 +92,7 @@ function AdminPanel() {
         <Sidebar onSelect={handleSelect} isSidebarOpen={isSidebarOpen} />
         <div className="flex-1 flex flex-col" style={{ marginTop: '64px' }}>
           <Navbar onLogout={handleLogout} toggleSidebar={toggleSidebar} toggleTheme={toggleTheme} theme={theme} isSidebarOpen={isSidebarOpen} />
-          <MainContent section={selectedSection} getApiKey={getApiKey} apiKey={apiKey} />
+          <MainContent section={selectedSection} getApiKey={getModeratorApiKey} apiKey={moderatorApiKey} />
         </div>
         <ManagePlayerModal />
       </div>
@@ -100,4 +100,4 @@ function AdminPanel() {
   );
 }
 
-export default AdminPanel;
+export default ModeratorPanel;
