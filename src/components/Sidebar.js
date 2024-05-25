@@ -1,37 +1,93 @@
 import React from 'react';
-import { Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { Drawer, List, ListItem, ListItemText, ListItemIcon, IconButton, useTheme } from '@mui/material';
+import { Person as PersonIcon, AdminPanelSettings as AdminPanelSettingsIcon, Computer as ComputerIcon, Web as WebIcon, Email as EmailIcon, VpnKey as VpnKeyIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
+import styled from '@emotion/styled';
 
-function Sidebar({ onSelect, isSidebarOpen }) {
+const drawerWidth = 240;
+
+const StyledDrawer = styled(Drawer)`
+  .MuiDrawer-paper {
+    width: ${drawerWidth}px;
+    background-color: ${props => props.theme.palette.background.default};
+    color: ${props => props.theme.palette.text.primary};
+    @media (max-width: 600px) {
+      width: 200px; /* Küçük ekranlar için genişlik ayarı */
+    }
+  }
+`;
+
+const StyledListItem = styled(ListItem)`
+  &:hover {
+    background-color: ${props => props.theme.palette.action.hover};
+  }
+`;
+
+const DrawerHeader = styled.div`
+  display: flex;
+  align-items: center;
+  padding: ${props => props.theme.spacing(0, 1)};
+  justify-content: flex-end;
+`;
+
+function Sidebar({ onSelect, isSidebarOpen, toggleSidebar }) {
+  const theme = useTheme();
+
   return (
-    <Drawer
-      variant="persistent"
+    <StyledDrawer
+      variant="temporary"
       anchor="left"
       open={isSidebarOpen}
-      style={{ marginTop: '64px' }}
+      onClose={toggleSidebar}
+      ModalProps={{
+        keepMounted: true, // Better open performance on mobile.
+      }}
     >
-      <div style={{ marginTop: '64px' }}> {/* Bu div eklenerek butonlar daha aşağı alınacak */}
+      <DrawerHeader>
+        <IconButton onClick={toggleSidebar}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </DrawerHeader>
+      <div style={{ marginTop: '26px' }}>
         <List>
-          <ListItem button onClick={() => onSelect('players')}>
+          <StyledListItem button onClick={() => onSelect('players')}>
+            <ListItemIcon>
+              <PersonIcon style={{ color: theme.palette.text.primary }} />
+            </ListItemIcon>
             <ListItemText primary="Players" />
-          </ListItem>
-          <ListItem button onClick={() => onSelect('admins')}>
+          </StyledListItem>
+          <StyledListItem button onClick={() => onSelect('admins')}>
+            <ListItemIcon>
+              <AdminPanelSettingsIcon style={{ color: theme.palette.text.primary }} />
+            </ListItemIcon>
             <ListItemText primary="Admins" />
-          </ListItem>
-          <ListItem button onClick={() => onSelect('vps')}>
+          </StyledListItem>
+          <StyledListItem button onClick={() => onSelect('vps')}>
+            <ListItemIcon>
+              <ComputerIcon style={{ color: theme.palette.text.primary }} />
+            </ListItemIcon>
             <ListItemText primary="VPS Server" />
-          </ListItem>
-          <ListItem button onClick={() => onSelect('website')}>
+          </StyledListItem>
+          <StyledListItem button onClick={() => onSelect('website')}>
+            <ListItemIcon>
+              <WebIcon style={{ color: theme.palette.text.primary }} />
+            </ListItemIcon>
             <ListItemText primary="Website" />
-          </ListItem>
-          <ListItem button onClick={() => onSelect('mailservice')}>
+          </StyledListItem>
+          <StyledListItem button onClick={() => onSelect('mailservice')}>
+            <ListItemIcon>
+              <EmailIcon style={{ color: theme.palette.text.primary }} />
+            </ListItemIcon>
             <ListItemText primary="MailService" />
-          </ListItem>
-          <ListItem button onClick={() => onSelect('apikey')}>
+          </StyledListItem>
+          <StyledListItem button onClick={() => onSelect('apikey')}>
+            <ListItemIcon>
+              <VpnKeyIcon style={{ color: theme.palette.text.primary }} />
+            </ListItemIcon>
             <ListItemText primary="Get API Key" />
-          </ListItem>
+          </StyledListItem>
         </List>
       </div>
-    </Drawer>
+    </StyledDrawer>
   );
 }
 

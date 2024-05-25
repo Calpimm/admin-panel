@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 const StyledAppBar = styled(AppBar)`
   background-color: ${props => props.theme.palette.background.paper};
   z-index: ${props => props.theme.zIndex.drawer + 1};
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 function Navbar({ onLogout, toggleSidebar, toggleTheme, theme, isSidebarOpen }) {
