@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, FormControlLabel, Checkbox } from '@mui/material';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'react-toastify';
 
 const FormWrapper = styled(motion.div)`
   display: flex;
@@ -113,19 +114,18 @@ const MailForm = ({ option, goBack }) => {
           setIsSending(false);
           setTimeout(() => setShowSuccess(false), 2000);
         }, 2000);
+        toast.success('Mail succesfully send')
         setSenderName('');
         setSubject('');
         setMailContent('');
         setFile(null);
         setIsHtml(false);
       } else {
-        setError(data.message);
-        alert(data.message);
+        toast.error('Failed to send mail');
         setIsSending(false);
       }
     } catch (error) {
-      setError('An error occurred. Please try again.');
-      alert('An error occurred. Please try again.');
+      toast.error('An error occurred. Please try again.');
       setIsSending(false);
     }
   };

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import backgroundImage from '../assets/images/LoginBack.jpg';
 import Preloader from './Preloader';
+import { toast } from 'react-toastify';
 
 const Background = styled.div`
   background-image: url(${backgroundImage});
@@ -18,15 +19,18 @@ const Background = styled.div`
 `;
 
 const MotionBox = styled(motion.div)`
-  background: rgba(0, 0, 0, 0.4); /* Şeffaf koyu arka plan */
+  background: rgba(0, 0, 0, 0.6); /* Şeffaf koyu arka plan */
   padding: 40px;
   border-radius: 16px;
   border: 2px solid rgba(255, 255, 255, 0.7); /* Beyaz kenarlık */
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px); /* Blur efekti */
-  margin-top: 30%;
+  margin: 0 auto; /* Center the box horizontally */
   width: 40%;
-  margin-left: 30%;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  transform: translate(-50%, -50%);
 `;
 
 const LoginContainer = styled(Container)`
@@ -41,7 +45,6 @@ const LoginForm = styled(Box)`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 400px;
 `;
 
 const StyledTextField = styled(TextField)`
@@ -102,11 +105,12 @@ const Login = () => {
           window.location.reload();  // Sayfa yenileme işlemi
         }, 3000); // 3 saniye sonra admin panele yönlendirme ve sayfa yenileme
       } else {
-        setError(data.message);
+        
+        toast.error(`Login failed: ${data.message}`);
         setLoading(false);
       }
     } catch (error) {
-      setError('An error occurred. Please try again.');
+      toast.error('An error occurred. Please try again.');
       setLoading(false);
     }
   };

@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import AdminPanel from './components/AdminPanel';
 import Login from './components/login';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Toastify CSS dosyasını import edin
 import './index.css'; // Import the CSS file
 
 const PrivateRoute = ({ children }) => {
@@ -25,6 +27,7 @@ function App() {
           />
         </Routes>
       </Router>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
     </div>
   );
 }

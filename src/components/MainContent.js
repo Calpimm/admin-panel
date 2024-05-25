@@ -5,6 +5,7 @@ import { Container, TextField, Table, TableHead, TableRow, TableCell, TableBody,
 import styled from 'styled-components';
 import MailService from './MailService';
 import ApiKeySection from './ApiKeySection'; // Yeni bileşeni import edin
+import { toast } from 'react-toastify';
 
 const StyledButton = styled(Button)`
   position: relative;
@@ -60,11 +61,11 @@ const MainContent = ({ section, getApiKey, apiKey }) => {
       if (response.ok) {
         setPlayers(data || []);
       } else {
-        console.error('Error fetching players:', data.message);
+        toast.error('Error fetching players:', data.message)
         alert(data.message);
       }
     } catch (error) {
-      console.error('Fetch error:', error);
+      toast.error('Fetch error:', error)
       alert('An error occurred. Please try again.');
     }
   };
@@ -82,14 +83,15 @@ const MainContent = ({ section, getApiKey, apiKey }) => {
       const data = await response.json();
 
       if (response.ok) {
+        toast.success('Succesfully deleted. ✅')
         fetchPlayers();
         closeModal();
       } else {
-        console.error('Error deleting player:', data.message);
+        toast.error('Error deleting player:', data.message, '❌' )
         alert(data.message);
       }
     } catch (error) {
-      console.error('Delete fetch error:', error);
+      toast.error('Delete fetch error:', error, '❌' )
       alert('An error occurred. Please try again.');
     }
   };

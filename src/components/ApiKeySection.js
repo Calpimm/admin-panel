@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CopyIcon from '@mui/icons-material/FileCopy';
+import { toast } from 'react-toastify';
 
 const endpoints = [
   { name: '/players', url: 'https://lamronapi.me/players' },
@@ -69,12 +70,10 @@ const ApiKeySection = ({ getApiKey, apiKey }) => {
         if (response.ok) {
           getApiKey(data.apiKey);
         } else {
-          console.error('Error fetching API key:', data.message);
-          alert(data.message);
+          toast.error(data.message);
         }
       } catch (error) {
-        console.error('Fetch API key error:', error);
-        alert('An error occurred. Please try again.');
+        toast.error(error);
       }
     };
 
@@ -96,13 +95,13 @@ const ApiKeySection = ({ getApiKey, apiKey }) => {
 
       if (response.ok) {
         getApiKey(data.apiKey); // API anahtarını yenilemek için parent component'deki fonksiyonu çağırıyoruz
+        toast.success('New api key generated');
       } else {
-        console.error('Error generating API key:', data.message);
-        alert(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
-      console.error('Generate API key error:', error);
-      alert('An error occurred. Please try again.');
+      toast.error(error);
+
     } finally {
       setLoading(false);
     }
@@ -111,6 +110,7 @@ const ApiKeySection = ({ getApiKey, apiKey }) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(apiKey);
     setCopySuccess('API key copied to clipboard!');
+
     setTimeout(() => setCopySuccess(''), 2000); // 2 saniye sonra mesajı sil
   };
 
