@@ -30,7 +30,7 @@ function Navbar({ onLogout, toggleSidebar, toggleTheme, theme, isSidebarOpen }) 
         <Typography variant="h6" style={{ flexGrow: 1, color: currentTheme.palette.text.primary }}>
           {sessionStorage.getItem('role') === 'admin' ? 'Admin Panel' : 'Moderator Panel'}
         </Typography>
-        <Button component={Link} to="/docs" color="inherit" style={{ color: currentTheme.palette.text.primary }}>
+        <Button component={Link} to="/ApiDocumentation" color="inherit" style={{ color: currentTheme.palette.text.primary }}>
           API Docs
         </Button>
         <IconButton

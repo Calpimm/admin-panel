@@ -5,7 +5,7 @@ import Login from './components/login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Toastify CSS dosyasını import edin
 import './index.css'; // Import the CSS file
-import Docs from './components/Docs/Docs';
+import ApiDocumentation from './components/Docs/Docs';
 import ModeratorPanel from './components/ModeratorPanel';
 
 const PrivateRoute = ({ children, role }) => {
@@ -38,10 +38,10 @@ function App() {
             }
           />
           <Route 
-            path="/docs"
+            path="/ApiDocumentation"
             element={
               <PrivateRoute>
-                <Docs />
+                <ApiDocumentation />
               </PrivateRoute>
             }
           />

@@ -1,11 +1,12 @@
 {
   "name": "admin-panel",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "private": true,
   "dependencies": {
     "@emotion/babel-plugin": "^11.11.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@heroicons/react": "^1.0.6",
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
     "@testing-library/jest-dom": "^5.17.0",
