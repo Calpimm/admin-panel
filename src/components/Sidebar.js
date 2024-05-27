@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, IconButton, useTheme } from '@mui/material';
-import { Person as PersonIcon, AdminPanelSettings as AdminPanelSettingsIcon, Computer as ComputerIcon, Web as WebIcon, Email as EmailIcon, VpnKey as VpnKeyIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
+import { Person as PersonIcon, AdminPanelSettings as AdminPanelSettingsIcon, History as HistoryIcon, Computer as ComputerIcon, Web as WebIcon, Email as EmailIcon, VpnKey as VpnKeyIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
 import styled from '@emotion/styled';
 import { toast } from 'react-toastify';
 
@@ -40,7 +40,7 @@ function Sidebar({ onSelect, isSidebarOpen, toggleSidebar }) {
   }, []);
 
   const handleSelect = (section) => {
-    if (role !== 'admin' && section !== 'players') {
+    if (role !== 'admin' && section !== 'players' && section !== 'banHistory') {
       toast.error('Yetkisiz işlem');
       return;
     }
@@ -70,36 +70,47 @@ function Sidebar({ onSelect, isSidebarOpen, toggleSidebar }) {
             </ListItemIcon>
             <ListItemText primary="Players" />
           </StyledListItem>
-          <StyledListItem button onClick={() => handleSelect('admins')}>
-            <ListItemIcon>
-              <AdminPanelSettingsIcon style={{ color: theme.palette.text.primary }} />
-            </ListItemIcon>
-            <ListItemText primary="Admins" />
-          </StyledListItem>
-          <StyledListItem button onClick={() => handleSelect('vps')}>
-            <ListItemIcon>
-              <ComputerIcon style={{ color: theme.palette.text.primary }} />
-            </ListItemIcon>
-            <ListItemText primary="VPS Server" />
-          </StyledListItem>
-          <StyledListItem button onClick={() => handleSelect('website')}>
-            <ListItemIcon>
-              <WebIcon style={{ color: theme.palette.text.primary }} />
-            </ListItemIcon>
-            <ListItemText primary="Website" />
-          </StyledListItem>
-          <StyledListItem button onClick={() => handleSelect('mailservice')}>
-            <ListItemIcon>
-              <EmailIcon style={{ color: theme.palette.text.primary }} />
-            </ListItemIcon>
-            <ListItemText primary="MailService" />
-          </StyledListItem>
-          <StyledListItem button onClick={() => handleSelect('apikey')}>
-            <ListItemIcon>
-              <VpnKeyIcon style={{ color: theme.palette.text.primary }} />
-            </ListItemIcon>
-            <ListItemText primary="Get API Key" />
-          </StyledListItem>
+          <StyledListItem button onClick={() => handleSelect('banHistory')}>
+                <ListItemIcon>
+                  <HistoryIcon style={{ color: theme.palette.text.primary }} />
+                </ListItemIcon>
+                <ListItemText primary="Ban History" />
+              </StyledListItem>
+          {role === 'admin' && (
+            <>
+              <StyledListItem button onClick={() => handleSelect('moderators')}>
+                <ListItemIcon>
+                  <AdminPanelSettingsIcon style={{ color: theme.palette.text.primary }} />
+                </ListItemIcon>
+                <ListItemText primary="Moderators" />
+              </StyledListItem>
+              <StyledListItem button onClick={() => handleSelect('vps')}>
+                <ListItemIcon>
+                  <ComputerIcon style={{ color: theme.palette.text.primary }} />
+                </ListItemIcon>
+                <ListItemText primary="VPS Server" />
+              </StyledListItem>
+              <StyledListItem button onClick={() => handleSelect('website')}>
+                <ListItemIcon>
+                  <WebIcon style={{ color: theme.palette.text.primary }} />
+                </ListItemIcon>
+                <ListItemText primary="Website" />
+              </StyledListItem>
+              <StyledListItem button onClick={() => handleSelect('mailservice')}>
+                <ListItemIcon>
+                  <EmailIcon style={{ color: theme.palette.text.primary }} />
+                </ListItemIcon>
+                <ListItemText primary="MailService" />
+              </StyledListItem>
+              <StyledListItem button onClick={() => handleSelect('apikey')}>
+                <ListItemIcon>
+                  <VpnKeyIcon style={{ color: theme.palette.text.primary }} />
+                </ListItemIcon>
+                <ListItemText primary="Get API Key" />
+              </StyledListItem>
+
+            </>
+          )}
         </List>
       </div>
     </StyledDrawer>

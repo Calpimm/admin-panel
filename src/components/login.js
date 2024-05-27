@@ -99,6 +99,12 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
+        if (data.bannedUntil && new Date(data.bannedUntil) > new Date()) {
+          setError('Your account is banned until ' + new Date(data.bannedUntil).toLocaleString());
+          setLoading(false);
+          return;
+        }
+        
         sessionStorage.setItem('adminToken', data.token);
         sessionStorage.setItem('role', data.role); // Add user role to session storage
         if (data.role === 'admin') {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
 import { toast } from 'react-toastify';
 
-function ManagePlayerModal({ isOpen, onRequestClose, player, deletePlayer, banPlayer }) {
+function ManageModeratorModal({ isOpen, onRequestClose, moderator, deleteModerator, banModerator }) {
   const [banDuration, setBanDuration] = useState('');
   const [reason, setReason] = useState('');
 
@@ -11,25 +11,21 @@ function ManagePlayerModal({ isOpen, onRequestClose, player, deletePlayer, banPl
       toast.error("Please enter both ban duration and reason.");
       return;
     }
-    banPlayer(player.playerId, banDuration, reason);
+    banModerator(moderator._id, banDuration, reason);
   };
 
   if (!isOpen) {
     return null;
   }
 
-  const banUntil = player.bannedUntil ? new Date(player.bannedUntil).toLocaleString() : 'Not banned';
+  const banUntil = moderator.bannedUntil ? new Date(moderator.bannedUntil).toLocaleString() : 'Not banned';
 
   return (
     <Dialog open={isOpen} onClose={onRequestClose}>
-      <DialogTitle>Manage Player</DialogTitle>
+      <DialogTitle>Manage Moderator</DialogTitle>
       <DialogContent>
-        <p>Player ID: {player.playerId}</p>
-        <p>Username: {player.username}</p>
-        <p>Email: {player.email}</p>
-        <p>Score: {player.score}</p>
-        <p>Verified: {player.verified ? 'Yes' : 'No'}</p>
-        <p>Player Account Date: {player.createdAt}</p>
+        <p>Moderator ID: {moderator._id}</p>
+        <p>Username: {moderator.username}</p>
         <p>Banned Until: {banUntil}</p> {/* Ban bitiş zamanı */}
         <TextField
           label="Ban Duration (minutes)"
@@ -50,18 +46,18 @@ function ManagePlayerModal({ isOpen, onRequestClose, player, deletePlayer, banPl
       </DialogContent>
       <DialogActions>
         <Button
-          onClick={() => deletePlayer(player.playerId)}
+          onClick={() => deleteModerator(moderator._id)}
           variant="contained"
           color="secondary"
         >
-          Delete Player
+          Delete Moderator
         </Button>
         <Button
           onClick={handleBan}
           variant="contained"
           color="primary"
         >
-          Ban Player
+          Ban Moderator
         </Button>
         <Button onClick={onRequestClose} variant="contained">
           Cancel
@@ -71,4 +67,4 @@ function ManagePlayerModal({ isOpen, onRequestClose, player, deletePlayer, banPl
   );
 }
 
-export default ManagePlayerModal;
+export default ManageModeratorModal;
