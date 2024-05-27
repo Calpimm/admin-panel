@@ -62,7 +62,6 @@ const MailForm = ({ option, goBack }) => {
   const [subject, setSubject] = useState('');
   const [mailContent, setMailContent] = useState('');
   const [isHtml, setIsHtml] = useState(false);
-  const [error, setError] = useState('');
   const [file, setFile] = useState(null);
   const [isSending, setIsSending] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -114,7 +113,6 @@ const MailForm = ({ option, goBack }) => {
         body: JSON.stringify(payload)
       });
 
-      const data = await response.json();
       if (response.ok) {
         setTimeout(() => {
           setShowSuccess(true);
@@ -145,7 +143,7 @@ const MailForm = ({ option, goBack }) => {
       <Typography variant="h4" component="h1" gutterBottom>
         {option.label}
       </Typography>
-      {error && <Typography color="error">{error}</Typography>}
+
       <FormWrapper
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

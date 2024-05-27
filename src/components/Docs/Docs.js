@@ -15,6 +15,7 @@ const ApiDocumentation = () => {
     'Usage Examples',
   ];
   const [selectedSection, setSelectedSection] = useState(sections[0]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const examples = {
     'Admin Endpoints - Register Admin': {
@@ -1091,15 +1092,16 @@ int main() {
     }
   };
 
-  return (
+ return (
     <div className="flex bg-gray-900 text-gray-200 min-h-screen">
-      <DocSidebar sections={sections} onSelectSection={setSelectedSection} />
-      <div className="flex-1 ml-64">
-        <DocNavbar />
-        <div className="p-8">
+      <DocNavbar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      
+      <DocSidebar sections={sections} onSelectSection={setSelectedSection} isSidebarOpen={isSidebarOpen} />
+      <main className={`flex-1 transition-all duration-1000 transform ${isSidebarOpen ? 'md:ml-0' : 'md:ml-0'} ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
+        <div className="pt-24 p-4">
           {renderSectionContent(selectedSection)}
         </div>
-      </div>
+      </main>
     </div>
   );
 };

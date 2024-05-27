@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HomeIcon, KeyIcon, UserGroupIcon, MailIcon, BanIcon, ExclamationIcon, CodeIcon } from '@heroicons/react/outline';
-import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/react/outline';
+import { HomeIcon, KeyIcon, UserGroupIcon, MailIcon, BanIcon, ExclamationIcon, CodeIcon, ChevronRightIcon, ChevronDownIcon } from '@heroicons/react/outline';
 
 const icons = {
   Introduction: HomeIcon,
@@ -25,7 +24,7 @@ const subsections = {
   'Usage Examples': ['cURL Example', 'Node.js Example'],
 };
 
-const DocSidebar = ({ sections, onSelectSection }) => {
+const DocSidebar = ({ sections, onSelectSection, isSidebarOpen }) => {
   const [open, setOpen] = useState(null);
 
   const handleOpen = (index) => {
@@ -34,9 +33,9 @@ const DocSidebar = ({ sections, onSelectSection }) => {
 
   return (
     <motion.aside 
-      className="w-64 bg-gray-800 text-white h-screen fixed shadow-lg"
+      className={`bg-gray-800 text-white h-screen fixed md:relative w-64 shadow-lg transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
       initial={{ x: -250 }}
-      animate={{ x: 0 }}
+      animate={{ x: isSidebarOpen ? 0 : -250 }}
       transition={{ type: 'spring', stiffness: 120 }}
     >
       <div className="p-4">

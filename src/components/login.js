@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import backgroundImage from '../assets/images/LoginBack.jpg';
 import Preloader from './Preloader';
-import { toast } from 'react-toastify';
+
 
 const Background = styled.div`
   background-image: url(${backgroundImage});

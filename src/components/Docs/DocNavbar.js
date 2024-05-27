@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { HomeIcon, KeyIcon, UserGroupIcon, MailIcon, BanIcon, ExclamationIcon, CodeIcon } from '@heroicons/react/outline';
+import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
-const DocNavbar = () => {
+const DocNavbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
@@ -19,12 +18,22 @@ const DocNavbar = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  const handleMenuToggle = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <nav className="bg-gray-800 text-gray-200 shadow-lg w-full z-10">
+    <nav className="bg-gray-800 text-gray-200 shadow-lg fixed w-full z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-6">
-          <h1 className="text-xl font-bold ml-2">API Documentation</h1>
+          <div className="flex items-center">
+            <button
+              className="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+              onClick={handleMenuToggle}
+            >
+              {isSidebarOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
+            </button>
+            <h1 className="text-xl font-bold ml-2">API Documentation</h1>
           </div>
           <div className="flex items-center">
             <span className="text-gray-400">{currentTime}</span>
