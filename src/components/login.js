@@ -108,7 +108,7 @@ const Login = () => {
         sessionStorage.setItem('adminToken', data.token);
         sessionStorage.setItem('role', data.role); // Add user role to session storage
         if (data.role === 'admin') {
-          navigate('/');
+          navigate('/admin');
         } else {
           navigate('/moderator');
         }

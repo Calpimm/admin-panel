@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import AdminPanel from './components/AdminPanel';
 import Login from './components/login';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Toastify CSS dosyasını import edin
-import './index.css'; // Import the CSS file
+import 'react-toastify/dist/ReactToastify.css';
+import './index.css';
 import ApiDocumentation from './components/Docs/Docs';
 import ModeratorPanel from './components/ModeratorPanel';
 
@@ -26,11 +26,11 @@ const PrivateRoute = ({ children, role }) => {
 function App() {
   return (
     <div className="h-screen flex flex-col">
-      <Router>
+      <Router basename="/dashboard">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
-            path="/*"
+            path="/admin"
             element={
               <PrivateRoute role="admin">
                 <AdminPanel />
