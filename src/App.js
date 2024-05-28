@@ -26,7 +26,7 @@ const PrivateRoute = ({ children, role }) => {
 function App() {
   return (
     <div className="h-screen flex flex-col">
-      <Router basename="/dashboard">
+      <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
@@ -53,6 +53,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/login" element={<Navigate to="/login" />} />
         </Routes>
       </Router>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
